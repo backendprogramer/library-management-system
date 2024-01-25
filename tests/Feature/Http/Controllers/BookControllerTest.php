@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use Database\Seeders\BookSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
@@ -20,7 +19,6 @@ class BookControllerTest extends TestCase
         $this->seed(BookSeeder::class);
     }
 
-    
     /**
      * @test
      */
@@ -28,10 +26,9 @@ class BookControllerTest extends TestCase
     {
         $response = $this->get('/api/book/showall');
 
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->hasAll(['status', 'data', 'links'])
-                ->where('status', 'success')
-                ->whereType('data', 'array')
+        $response->assertJson(fn (AssertableJson $json) => $json->hasAll(['status', 'data', 'links'])
+            ->where('status', 'success')
+            ->whereType('data', 'array')
         );
     }
 
@@ -59,10 +56,9 @@ class BookControllerTest extends TestCase
     public function it_check_search_book_api(): void
     {
         $response = $this->get('/api/book/search', ['title' => 'test']);
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->hasAll(['status', 'data', 'links'])
-                ->where('status', 'success')
-                ->whereType('data', 'array')
+        $response->assertJson(fn (AssertableJson $json) => $json->hasAll(['status', 'data', 'links'])
+            ->where('status', 'success')
+            ->whereType('data', 'array')
         );
     }
 }

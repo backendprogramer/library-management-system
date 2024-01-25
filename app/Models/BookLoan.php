@@ -12,18 +12,19 @@ class BookLoan extends Model
 
     /**
      * Fields
+     *
      * @var string[]
      */
     protected $fillable = ['book_id', 'member_id', 'book_return_date'];
 
-
     // Accessor for the book_return_date attribute
     public function getbookReturnDateAttribute($value)
     {
-        if(isset($value)) {
+        if (isset($value)) {
             // Convert the timestamp to a datetime format using Carbon
             return Carbon::parse($value)->toDateTimeString();
         }
+
         return null;
     }
 
@@ -33,20 +34,24 @@ class BookLoan extends Model
         // Convert the timestamp to a datetime format using Carbon
         return Carbon::parse($value)->toDateTimeString();
     }
-    
+
     /**
      * get book data
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function book(){
+    public function book()
+    {
         return $this->hasOne(Book::class, 'id', 'book_id');
     }
 
     /**
      * get member data
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function member(){
+    public function member()
+    {
         return $this->hasOne(Member::class, 'id', 'member_id');
     }
 }

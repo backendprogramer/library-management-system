@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Book;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
@@ -16,7 +16,6 @@ class AddBookRequest extends FormRequest
     {
         return true;
     }
-
 
     /**
      * Get the validation rules that apply to the request.
@@ -32,8 +31,6 @@ class AddBookRequest extends FormRequest
         ];
     }
 
-
-    
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([

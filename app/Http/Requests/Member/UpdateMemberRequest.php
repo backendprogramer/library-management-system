@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests\Member;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
@@ -27,7 +26,7 @@ class UpdateMemberRequest extends FormRequest
     {
         return [
             'name' => ['nullable', 'string', 'max:50'],
-            'email' => ['nullable', 'email', 'max:250']
+            'email' => ['nullable', 'email', 'max:250'],
         ];
     }
 

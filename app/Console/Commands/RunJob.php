@@ -28,7 +28,7 @@ class RunJob extends Command
     public function handle()
     {
         $now = \Carbon\Carbon::now()->timestamp;
-        $unrunedJobs = DB::table('jobs')->where('created_at','<',$now-15)->count();
+        $unrunedJobs = DB::table('jobs')->where('created_at', '<', $now - 15)->count();
         if ($unrunedJobs > 0) {
             Artisan::call('queue:restart');
             Artisan::call('queue:work');

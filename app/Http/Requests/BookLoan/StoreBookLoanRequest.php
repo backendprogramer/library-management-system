@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\BookLoan;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
 
 class StoreBookLoanRequest extends FormRequest
 {
@@ -26,8 +26,8 @@ class StoreBookLoanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'member_id' => ['required', 'numeric', Rule::exists('members','id')],
-            'book_id' => ['required', 'numeric', Rule::exists('books','id')],
+            'member_id' => ['required', 'numeric', Rule::exists('members', 'id')],
+            'book_id' => ['required', 'numeric', Rule::exists('books', 'id')],
         ];
     }
 

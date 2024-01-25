@@ -8,9 +8,10 @@ use App\Http\Services\BookService;
 
 class BookController extends Controller
 {
-    
-    public function __construct(private $bookService = new BookService()) {}
-    
+    public function __construct(private $bookService = new BookService())
+    {
+    }
+
     /**
      * Display a listing of the Books.
      */
@@ -34,5 +35,4 @@ class BookController extends Controller
     {
         return $this->bookService->searchBook($request);
     }
-
 }

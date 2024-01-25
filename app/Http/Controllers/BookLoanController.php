@@ -8,9 +8,10 @@ use App\Models\BookLoan;
 
 class BookLoanController extends Controller
 {
+    public function __construct(private $bookLoanService = new BookLoanService())
+    {
+    }
 
-    public function __construct(private $bookLoanService = new BookLoanService()) {}
-    
     /**
      * Display a listing of books borrowed by members
      */
@@ -19,7 +20,6 @@ class BookLoanController extends Controller
         return $this->bookLoanService->showList();
     }
 
-
     /**
      * Store the borrowed book
      */
@@ -27,7 +27,6 @@ class BookLoanController extends Controller
     {
         return $this->bookLoanService->bookLoan($request);
     }
-
 
     /**
      * Update the borrowed book in storage.

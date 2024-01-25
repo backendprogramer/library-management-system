@@ -17,7 +17,9 @@ class bookLoanJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private $request){}
+    public function __construct(private $request)
+    {
+    }
 
     /**
      * Execute the job.
@@ -28,7 +30,7 @@ class bookLoanJob implements ShouldQueue
             BookLoan::create($this->request);
         } catch (\Exception $exception) {
             // Save Erorr In Laravel Log File
-            Log::error('error in BookLoan method in BookLoanService: ' . $exception->getMessage() . " \n" . $exception);
+            Log::error('error in BookLoan method in BookLoanService: '.$exception->getMessage()." \n".$exception);
         }
     }
 }

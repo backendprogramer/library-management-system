@@ -11,6 +11,7 @@ class Member extends Model
 
     /**
      * Fields
+     *
      * @var string[]
      */
     protected $fillable = ['name', 'email'];

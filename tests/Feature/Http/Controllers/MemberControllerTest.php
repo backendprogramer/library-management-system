@@ -5,14 +5,13 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Member;
 use Database\Seeders\MemberSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class MemberControllerTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -20,7 +19,7 @@ class MemberControllerTest extends TestCase
         // Run seeders using the Artisan command
         $this->seed(MemberSeeder::class);
     }
-    
+
     /**
      * @test
      */
@@ -28,10 +27,9 @@ class MemberControllerTest extends TestCase
     {
         $response = $this->get('/api/member/showall');
 
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->hasAll(['status', 'data', 'links'])
-                ->where('status', 'success')
-                ->whereType('data', 'array')
+        $response->assertJson(fn (AssertableJson $json) => $json->hasAll(['status', 'data', 'links'])
+            ->where('status', 'success')
+            ->whereType('data', 'array')
         );
     }
 
@@ -60,7 +58,7 @@ class MemberControllerTest extends TestCase
     {
         $this->it_check_add_member_api_successfully();
         $member = Member::orderBy('id')->first();
-        $response = $this->post('/api/member/update/' . $member->id, ['name' => 'test1', 'email' => 'test1@gmail.com']);
+        $response = $this->post('/api/member/update/'.$member->id, ['name' => 'test1', 'email' => 'test1@gmail.com']);
         $response->assertStatus(200);
     }
 
@@ -71,7 +69,7 @@ class MemberControllerTest extends TestCase
     {
         $this->it_check_add_member_api_successfully();
         $member = Member::orderBy('id')->first();
-        $response = $this->delete('/api/member/destroy/' . $member->id);
+        $response = $this->delete('/api/member/destroy/'.$member->id);
         $response->assertStatus(200);
     }
 
@@ -81,10 +79,9 @@ class MemberControllerTest extends TestCase
     public function it_check_search_member_api(): void
     {
         $response = $this->get('/api/member/search', ['name' => 'test']);
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->hasAll(['status', 'data', 'links'])
-                ->where('status', 'success')
-                ->whereType('data', 'array')
+        $response->assertJson(fn (AssertableJson $json) => $json->hasAll(['status', 'data', 'links'])
+            ->where('status', 'success')
+            ->whereType('data', 'array')
         );
     }
 }

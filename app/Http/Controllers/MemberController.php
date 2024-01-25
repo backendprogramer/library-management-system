@@ -10,9 +10,10 @@ use App\Models\Member;
 
 class MemberController extends Controller
 {
+    public function __construct(private $memberService = new MemberService())
+    {
+    }
 
-    public function __construct(private $memberService = new MemberService()) {}
-    
     /**
      * Display a listing of the resource.
      */
@@ -28,8 +29,6 @@ class MemberController extends Controller
     {
         return $this->memberService->addMember($request);
     }
-
-
 
     /**
      * Update the specified resource in storage.

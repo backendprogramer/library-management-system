@@ -8,14 +8,16 @@ use App\Jobs\bookLoanJob;
 use App\Models\BookLoan;
 use Illuminate\Support\Facades\Log;
 
-class BookLoanService {
-    
+class BookLoanService
+{
     /**
      * Display a listing of the BookLoans.
      */
-    public function showList() {
+    public function showList()
+    {
         try {
             $bookLoans = BookLoan::with('book')->with('member')->paginate(10);
+
             return $this->returnResponse($bookLoans);
         } catch (\Exception $exception) {
             return $this->errorResponse($exception, 'showList');
@@ -25,47 +27,54 @@ class BookLoanService {
     /**
      * Add new BookLoan.
      */
-    public function bookLoan($request) {
+    public function bookLoan($request)
+    {
         Dispatch(new bookLoanJob($request->all()));
+
         return response()->json([
             'status' => 'success',
-            'message' => 'BookLoan request added successfully'
-        ]);  
-    } 
+            'message' => 'BookLoan request added successfully',
+        ]);
+    }
 
     /**
      * Update returned BookLoan.
      */
-    public function returnBook($bookLoan) {
+    public function returnBook($bookLoan)
+    {
         try {
             $bookLoan->update(['book_return_date' => now()]);
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'BookLoan updated successfully',
-                'member' => new BookLoanResource($bookLoan)
+                'member' => new BookLoanResource($bookLoan),
             ]);
         } catch (\Exception $exception) {
             return $this->errorResponse($exception, 'edit');
         }
-    } 
+    }
 
     /**
      * Response for error catch section
      */
-    private function errorResponse($exception, $nameMethode) {
+    private function errorResponse($exception, $nameMethode)
+    {
         // Save Erorr In Laravel Log File
-        Log::error('error in ' . $nameMethode . 'Book method in BookLoanService: ' . $exception->getMessage() . " \n" . $exception);
+        Log::error('error in '.$nameMethode.'Book method in BookLoanService: '.$exception->getMessage()." \n".$exception);
+
         // Return Responce Error
         return response()->json([
             'status' => 'error',
-            'message' => 'BookLoan ' . $nameMethode . ' Unsuccessfully!'
-        ],500);
+            'message' => 'BookLoan '.$nameMethode.' Unsuccessfully!',
+        ], 500);
     }
 
     /**
      * Response for showAll and seachBook methods
      */
-    private function returnResponse($bookLoans) {
+    private function returnResponse($bookLoans)
+    {
         return response()->json([
             'status' => 'success',
             'data' => BookLoanResource::collection($bookLoans),
