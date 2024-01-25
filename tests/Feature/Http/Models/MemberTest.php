@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class MemberTest extends TestCase
 {
-     /**
+    /**
      * A basic test example.
      */
     public function test_create_member(): void

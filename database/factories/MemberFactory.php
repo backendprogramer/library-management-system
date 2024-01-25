@@ -18,7 +18,7 @@ class MemberFactory extends Factory
     {
         return [
             'name' => fake()->lastName(),
-            'email' => fake()->email()
+            'email' => fake()->email(),
         ];
     }
 }

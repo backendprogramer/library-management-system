@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Member;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
@@ -26,7 +26,7 @@ class StoreMemberRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'email', 'max:250']
+            'email' => ['required', 'email', 'max:250'],
         ];
     }
 

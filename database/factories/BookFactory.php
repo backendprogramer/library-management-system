@@ -19,7 +19,7 @@ class BookFactory extends Factory
         return [
             'title' => fake()->name(),
             'author' => fake()->lastName(),
-            'publish_year' => fake()->numberBetween(1970,2024)
+            'publish_year' => fake()->numberBetween(1970, 2024),
         ];
     }
 }
