@@ -1,0 +1,90 @@
+<?php
+
+namespace Tests\Feature\Http\Controllers;
+
+use App\Models\Member;
+use Database\Seeders\MemberSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\Fluent\AssertableJson;
+use Tests\TestCase;
+
+class MemberControllerTest extends TestCase
+{
+    use RefreshDatabase;
+    
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // Run seeders using the Artisan command
+        $this->seed(MemberSeeder::class);
+    }
+    
+    /**
+     * @test
+     */
+    public function it_check_show_all_member_api(): void
+    {
+        $response = $this->get('/api/member/showall');
+
+        $response->assertJson(fn (AssertableJson $json) =>
+            $json->hasAll(['status', 'data', 'links'])
+                ->where('status', 'success')
+                ->whereType('data', 'array')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_check_add_member_api_error(): void
+    {
+        $response = $this->post('/api/member/store', ['']);
+        $response->assertStatus(422);
+    }
+
+    /**
+     * @test
+     */
+    public function it_check_add_member_api_successfully(): void
+    {
+        $response = $this->post('/api/member/store', ['name' => 'test', 'email' => 'test@gmail.com']);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function it_check_update_member_api_successfully(): void
+    {
+        $this->it_check_add_member_api_successfully();
+        $member = Member::orderBy('id')->first();
+        $response = $this->post('/api/member/update/' . $member->id, ['name' => 'test1', 'email' => 'test1@gmail.com']);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function it_check_delete_member_api_successfully(): void
+    {
+        $this->it_check_add_member_api_successfully();
+        $member = Member::orderBy('id')->first();
+        $response = $this->delete('/api/member/destroy/' . $member->id);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function it_check_search_member_api(): void
+    {
+        $response = $this->get('/api/member/search', ['name' => 'test']);
+        $response->assertJson(fn (AssertableJson $json) =>
+            $json->hasAll(['status', 'data', 'links'])
+                ->where('status', 'success')
+                ->whereType('data', 'array')
+        );
+    }
+}
